@@ -1,66 +1,51 @@
 {
- "properties": {
-  "displayName": "Require a tag on resource groups-(Modified)",
-  "policyType": "Custom",
   "mode": "All",
-  "description": "Enforces existence of a tags on resource groups.",
-  "metadata": {
-   "category": "Tags",
-   "createdBy": "8e6d49a1-8e7d-46b9-9119-f0dbd9e85350",
-   "createdOn": "2021-06-06T06:51:25.582907Z",
-   "updatedBy": "8e6d49a1-8e7d-46b9-9119-f0dbd9e85350",
-   "updatedOn": "2021-06-06T06:56:54.1508975Z"
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "field": "type",
+          "equals": "Microsoft.Resources/subscriptions/resourceGroups"
+        },
+        {
+          "field": "[concat('tags[', parameters('tagName'), ']')]",
+          "exists": "false"
+        },
+        {
+          "field": "[concat('tags[', parameters('tag2Name'), ']')]",
+          "exists": "false"
+        },
+        {
+          "field": "[concat('tags[', parameters('tag3Name'), ']')]",
+          "exists": "false"
+        }
+      ]
+    },
+    "then": {
+      "effect": "deny"
+    }
   },
   "parameters": {
-   "tagName": {
-    "type": "String",
-    "metadata": {
-     "displayName": "Tag 1 Name",
-     "description": "Name of the tag, such as 'Environment'"
+    "tagName": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Tag 1 Name",
+        "description": "Name of the tag, such as 'Environment'"
+      }
+    },
+    "tag2Name": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Tag 2 Name",
+        "description": "Name of the tag, such as 'Owner/Createdby'"
+      }
+    },
+    "tag3Name": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Tag 3 Name",
+        "description": "Name of the tag, such as 'Purpose'"
+      }
     }
-   },
-   "tag2Name": {
-    "type": "String",
-    "metadata": {
-     "displayName": "Tag 2 Name",
-     "description": "Name of the tag, such as 'Owner/Createdby'"
-    }
-   },
-   "tag3Name": {
-    "type": "String",
-    "metadata": {
-     "displayName": "Tag 3 Name",
-     "description": "Name of the tag, such as 'Purpose'"
-    }
-   }
-  },
-  "policyRule": {
-   "if": {
-    "allOf": [
-     {
-      "field": "type",
-      "equals": "Microsoft.Resources/subscriptions/resourceGroups"
-     },
-     {
-      "field": "[concat('tags[', parameters('tagName'), ']')]",
-      "exists": "false"
-     },
-     {
-      "field": "[concat('tags[', parameters('tag2Name'), ']')]",
-      "exists": "false"
-     },
-     {
-      "field": "[concat('tags[', parameters('tag3Name'), ']')]",
-      "exists": "false"
-     }
-    ]
-   },
-   "then": {
-    "effect": "deny"
-   }
   }
- },
- "id": "/subscriptions/ee22c8f0-93df-4b47-925a-d337fef522fe/providers/Microsoft.Authorization/policyDefinitions/13a3970a-a170-40cb-9904-83a99561cc57",
- "type": "Microsoft.Authorization/policyDefinitions",
- "name": "13a3970a-a170-40cb-9904-83a99561cc57"
 }
